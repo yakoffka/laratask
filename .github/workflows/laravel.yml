@@ -1,0 +1,56 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # build:
+  #
+  #   runs-on: ubuntu-latest
+  #
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #
+  #   - name: Validate composer.json and composer.lock
+  #     run: composer validate
+  #
+  #   - name: Cache Composer packages
+  #     id: composer-cache
+  #     uses: actions/cache@v2
+  #     with:
+  #       path: vendor
+  #       key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+  #       restore-keys: |
+  #         ${{ runner.os }}-php-
+  #
+  #   - name: Install dependencies
+  #     if: steps.composer-cache.outputs.cache-hit != 'true'
+  #     run: composer install --prefer-dist --no-progress --no-suggest
+  #
+  #   # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+  #   # Docs: https://getcomposer.org/doc/articles/scripts.md
+  #
+  #   # - name: Run test suite
+  #   #   run: composer run-script test
+
+  # ya update
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deployment
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{ secrets.SSH_USERNAME }}
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script:
+            cd /home/yakoffka/domains/yakoffka.xyz/subdomains/laratask/
+            git checkout -f
+            git pull
+            # composer install
+            # php74 artisan migrate
