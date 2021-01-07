@@ -48,5 +48,11 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           host: ${{ secrets.SSH_HOST }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: 'cd ~/domains/yakoffka.xyz/subdomains/laratask/ && git checkout -f main && git pull origin main && php74 ../../../../composer.phar install'
-          # php74 artisan migrate
+          script: 'cd ~/domains/yakoffka.xyz/subdomains/laratask/
+            && git checkout -f main
+            && git pull origin main
+            && php74 ../../../../composer.phar install
+            && php74 artisan migrate'
+            #  && npm install
+            #  && npm run dev'
+            # php74 artisan migrate
